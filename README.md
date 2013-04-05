@@ -83,9 +83,12 @@ A:
 
 
 <b>Q: I don't know what I'm using riak for, are there any good examples?</b>
+
 A:http://docs.basho.com/riak/1.2.1/cookbooks/use-cases/
 
-<b>Q: Why would I use this package instead of riakdb?</b>
+
+<b>Q: Why would I use this package instead of txriak?</b>
+
 A: I was working on a distributed cloud system for a security-based project, and I found it
 nearly impossible to use txriak. I think it stems from the riak library being 'too open'.
 I stress 'too open' because everything feels like it's a hack. It feels like every time I
@@ -97,7 +100,9 @@ In short: compile (code) time explicitness vs. hand-crafted run-time queries
 
 
 <b>Q: Is this module MIT?</b>
+
 A: Yes completely open-sourced!
+
 
 Copyright (c) 2013 JD Cumpson
 
