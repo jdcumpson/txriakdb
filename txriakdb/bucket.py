@@ -78,8 +78,8 @@ class Manager(object):
         """
         return self.session.find(self.cls, *args, **kwargs)
     
-    def find_by_index(self, index):
-        return self.session.find_by_index(self.cls, index)
+    def find_by_index(self, index, value):
+        return self.session.find_by_index(self.cls, index, value)
     
     def find_one(self, *args, **kwargs):
         return self.session.find_one(self.cls, **kwargs)
@@ -87,8 +87,8 @@ class Manager(object):
     def find_one_by_index(self, index):
         return self.session.find_one_by_index(self.cls, index)
     
-    def save(self):
-        return self.session.save(self.instance)
+    def store(self):
+        return self.session.store(self.instance)
     
     def count(self):
         return self.session.count(self.cls)
@@ -110,7 +110,7 @@ class Manager(object):
     def riak_search(self, *args, **kwargs):
         return self.session.riak_search(self.cls, *args, **kwargs)
     
-    def index_search(self, *args, **kwargs):
+    def si_search(self, *args, **kwargs):
         return self.session.index_search(self.cls, *args, **kwargs)
    
     def mapred(self, *args, **kwargs):
