@@ -106,6 +106,12 @@ In short: compile (code) time explicitness vs. hand-crafted run-time queries
 A: Yes completely open-sourced!
 
 
+<b>Q: I develop on windows what do I use?</b>
+
+A: I would recommend a VirtualBox VM running Ubuntu, using a virtual host network setup. Tutorial on this
+exists somewhere in the interwebs.
+
+
 Copyright (c) 2013 JD Cumpson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
