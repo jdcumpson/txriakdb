@@ -73,15 +73,19 @@ Riak requires that the eleveldb backend be enabled for secondary indexing
 enabled in order to work. See your 'app.conf' in rel/riak/etc/. 
 
 <b>Q: What are the parameters that I can use with queries for this database?</b>
-A: 
+A:
+
 -find(solr): http://docs.basho.com/riak/1.2.1/cookbooks/Riak-Search---Querying/#Querying-via-the-Solr-Interface
+
 -find_by_index(2i): http://docs.basho.com/riak/1.2.1/tutorials/Secondary-Indexes---Examples/
+
 -mapred: http://docs.basho.com/riak/1.2.1/tutorials/querying/MapReduce/
+
 
 <b>Q: I don't know what I'm using riak for, are there any good examples?</b>
 A:http://docs.basho.com/riak/1.2.1/cookbooks/use-cases/
 
-<b>Q: Why would I use this package instead of riakdb?<b>
+<b>Q: Why would I use this package instead of riakdb?</b>
 A: I was working on a distributed cloud system for a security-based project, and I found it
 nearly impossible to use txriak. I think it stems from the riak library being 'too open'.
 I stress 'too open' because everything feels like it's a hack. It feels like every time I
