@@ -67,12 +67,14 @@ if __name__ == "__main__":
 # FAQ's
 
 <b>Q: Riak is complaining about secondary indexes, what's the deal?</b>
+
 A: You probably are trying to use indexing without the proper backend.
 Riak requires that the eleveldb backend be enabled for secondary indexing
 (2i) to work. Also regular 'find' queries must have the solr interface 
 enabled in order to work. See your 'app.conf' in rel/riak/etc/. 
 
 <b>Q: What are the parameters that I can use with queries for this database?</b>
+
 A:
 
 -find(solr): http://docs.basho.com/riak/1.2.1/cookbooks/Riak-Search---Querying/#Querying-via-the-Solr-Interface
