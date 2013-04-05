@@ -63,3 +63,43 @@ if __name__ == "__main__":
 - Message me for information if you need, but adhering strictly to Riak docs, the mapred and linkwalk methods for clients need to be implemented, the framework is there and well defined.
 - Testing and use-cases to clarify code
 - Implementing schema validation (advanced)
+
+# FAQ's
+
+<b>Q: Riak is complaining about secondary indexes, what's the deal?</b>
+A: You probably are trying to use indexing without the proper backend.
+Riak requires that the eleveldb backend be enabled for secondary indexing
+(2i) to work. Also regular 'find' queries must have the solr interface 
+enabled in order to work. See your 'app.conf' in rel/riak/etc/. 
+
+<b>Q: What are the parameters that I can use with queries for this database?</b>
+A: 
+-find(solr): http://docs.basho.com/riak/1.2.1/cookbooks/Riak-Search---Querying/#Querying-via-the-Solr-Interface
+-find_by_index(2i): http://docs.basho.com/riak/1.2.1/tutorials/Secondary-Indexes---Examples/
+-mapred: http://docs.basho.com/riak/1.2.1/tutorials/querying/MapReduce/
+
+<b>Q: I don't know what I'm using riak for, are there any good examples?</b>
+A:http://docs.basho.com/riak/1.2.1/cookbooks/use-cases/
+
+<b>Q: Why would I use this package instead of riakdb?<b>
+A: I was working on a distributed cloud system for a security-based project, and I found it
+nearly impossible to use txriak. I think it stems from the riak library being 'too open'.
+I stress 'too open' because everything feels like it's a hack. It feels like every time I
+want to make a query it's a struggle. So I made txriak db in order to declutter the overall
+experience with the database, as well as make it <i>very explicit</i> in what objects are
+for and what they contain.
+
+In short: compile (code) time explicitness vs. hand-crafted run-time queries
+
+
+<b>Q: Is this module MIT?</b>
+A: Yes completely open-sourced!
+
+Copyright (c) 2013 JD Cumpson
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
