@@ -27,8 +27,10 @@ from txriakdb import bucket, client, schema, objectid
 log.startLogging(sys.stdout)
 
 # make sure you change the database to your database info
-riak_session = client.Session(client.Client(host='localhost',
-                                            port=8091))
+riak_session = client.Session()
+riak_client = client.Client(host='localhost',port=8091)
+riak_session.bind(riak_client)
+
 class Users(bucket.Bucket):
     class __riakmeta__:
         session = riak_session # give it an active 'session'
