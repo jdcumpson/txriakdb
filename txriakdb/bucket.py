@@ -72,6 +72,9 @@ class Manager(object):
     def get(self, key):
         return self.session.get(self.cls, key)
     
+    def all(self):
+        return self.session.all(self.cls)
+    
     def find(self, *args, **kwargs):
         """ Find a value in our bucket based on query parameters passed into
             the solr-like interface.
@@ -84,8 +87,8 @@ class Manager(object):
     def find_one(self, *args, **kwargs):
         return self.session.find_one(self.cls, **kwargs)
     
-    def find_one_by_index(self, index):
-        return self.session.find_one_by_index(self.cls, index)
+    def find_one_by_index(self, index, value):
+        return self.session.find_one_by_index(self.cls, index, value)
     
     def store(self):
         return self.session.store(self.instance)
@@ -128,8 +131,8 @@ class DictLike(dict):
             raise AttributeError, name
 
     def __setattr__(self, name, value):
-        if name in self.__class__.__dict__:
-            super(Object, self).__setattr__(name, value)
+        if name in self.__dict__:
+            super(DictLike, self).__setattr__(name, value)
         else:
             self.__setitem__(name, value)
 

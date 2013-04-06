@@ -3,6 +3,7 @@ Created on 2013-04-03
 
 @author: Noobie
 '''
+import traceback
 from urllib import urlencode, quote
 from datetime import datetime
 
@@ -78,8 +79,22 @@ class Session(object):
         return d
         
     def get(self, cls, key):
+        log.msg('GETTING KEY: %r' % (key))
+        
         d = self.client.fetch_object(cls.__riakmeta__.name, key)
-        d.addCallback(lambda json: cls(decoder.decode(json)))
+        def cb_decode(json):
+            if json == 'not found\n':
+                return None
+            return cls(decoder.decode(json))
+        
+        d.addCallback(cb_decode)
+        return d
+    
+    def all(self, cls):
+        d = self.client.list_keys(cls.__riakmeta__.name)
+        d.addCallback(decoder.decode)
+        d.addCallback(lambda result: result['keys'])
+        d.addErrback(lambda _:None)
         return d
     
     def find(self, cls, query, params=None):
@@ -93,6 +108,7 @@ class Session(object):
         d = self.client.si_search(cls.__riakmeta__.name, index, value)
         d.addCallback(decoder.decode)
         d.addCallback(lambda res:res['keys'])
+        d.addErrback(lambda _:[])
         return d
     
     def find_one(self, cls, query, **kwargs):
@@ -102,9 +118,13 @@ class Session(object):
         d.addCallback(lambda objs: objs[0])
         return d
     
-    def find_one_by_index(self, cls, index):
+    def find_one_by_index(self, cls, index, value):
+        if len(index.split('_')) == 1:
+            index += '_bin'
         d = self.client.si_search(cls.__riakmeta__.name, index, value)
         d.addCallback(decoder.decode)
+        d.addCallback(lambda results:results['keys'].pop())
+        d.addErrback(lambda _:None)
         return d
     
     def store(self, instance):
@@ -270,12 +290,15 @@ class Client(object):
     def store_object(self, bucket, key, object, params=None, headers=None):
         if not params:
             params = {'returnbody':'true'}
+        
+        if len(object._id.split('.')) > 1:
+            traceback.print_stack()
         url = self._make_url('/%s/keys/%s' % (bucket, key,), params=params)
         return self._get_url(url, postdata=encoder.encode(object),
                              method='PUT', headers=headers)
     
     def delete_object(self, bucket, key, params=None):
-        url = self._make_url('/%s/keys/%s' % (bucket, key,), params)
+        url = self._make_url('/%s/keys/%s' % (bucket, key,), None)
         return self._get_url(url, method='DELETE')
 
     #--- bucket methods
@@ -318,11 +341,11 @@ class Client(object):
         # riak blows monkey nuts, so we have to use content-type: text/xml
         return self._get_url(url)
     
-    def si_search(self, bucket, index, value, *args, **kwargs):
+    def si_search(self, bucket, index, value, params=None, *args, **kwargs):
         """
         Perform a 2i search on the riak data.
         """
-        url = self._make_url('/%s/index/%s/%s' % (bucket, index, value,))
+        url = self._make_url('/%s/index/%s/%s' % (bucket, index, value,), params)
         return self._get_url(url)
     
     def link_walk(self, bucket, *args, **kwargs):
