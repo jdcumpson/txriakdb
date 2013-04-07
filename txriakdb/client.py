@@ -79,8 +79,6 @@ class Session(object):
         return d
         
     def get(self, cls, key):
-        log.msg('GETTING KEY: %r' % (key))
-        
         d = self.client.fetch_object(cls.__riakmeta__.name, key)
         def cb_decode(json):
             if json == 'not found\n':
