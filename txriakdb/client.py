@@ -24,6 +24,10 @@ class Encoder(simplejson.JSONEncoder):
                                     hour=o.hour, minute=o.minute,second=o.second)) 
         if isinstance(o, objectid.ObjectId):
             return str(o)
+        
+        if hasattr(o, '__json__'):
+            return o.__json__()
+        
         return super(Encoder,self).default(o)
 
 
