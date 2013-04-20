@@ -1,0 +1,7 @@
+use iinteam;
+show colletions;
+show collections;
+db.logins.show()
+db.logins.list()
+db.logins.find()
+db.logins

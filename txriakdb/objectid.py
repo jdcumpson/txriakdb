@@ -13,8 +13,8 @@ except:  # for Python < 2.5
     import md5
     _md5func = md5.new
 
-from txmongo._pymongo.errors import InvalidId
-
+class InvalidId(Exception):
+    pass
 
 def _machine_bytes():
     """Get the machine portion of an ObjectId.
@@ -40,7 +40,7 @@ class ObjectId(object):
         ObjectId_. If `oid` is an instance of (``basestring``,
         :class:`ObjectId`) validate it and use that.  Otherwise, a
         :class:`TypeError` is raised. If `oid` is invalid,
-        :class:`~pymongo.errors.InvalidId` is raised.
+        :class:`InvalidId` is raised.
 
         :Parameters:
           - `oid` (optional): a valid ObjectId_ (12 byte binary or 24 character
